@@ -1,0 +1,28 @@
+{% extends 'mart/base.html' %} {% block title %}{{product.name | capfirst}}:{%
+endblock title %} {% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="{{product.img.url}}" />
+      <h3>{{product.name | capfirst}}</h3>
+      <h4>{{product.price}}</h4>
+      <p>{{product.description}}</p>
+
+      <a href="{% url 'product_show' product.id %}?action=edit">Edit</a>
+      <a href="{% url 'product_show' product.id %}?action=del">Delete</a>
+    </div>
+    {% if edit %}
+    <div class="col-md-6">
+      <form
+        action="{% url 'product_show' product.id %}?action=edit"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %} {{form}}
+        <button>Edit Product</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock body %}
